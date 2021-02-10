@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Image } from 'react-native-elements';
-import { Button, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, Button, View, Dimensions } from 'react-native';
 // import DirectionButton from './components/DirectionButton';
 
+// BACKGROUND
+import { ImageBackground } from 'react-native';
+import Background from './assets/bg.png';
 
 export default function App() {
   
@@ -11,9 +14,11 @@ export default function App() {
 
   return (
     <View style={{ flex: 1 }}>
+    <ImageBackground source={Background} style={styles.image}>
+
       <View style={{ flex: 2 }}>
         <Image
-          source={require('./assets/Quasimodo-PNG-HD.png')}
+          source={require('./assets/fusee2.png')}
           style={{ width: 100, height: 100, marginLeft: positionX, bottom: 0, overflow: 'visible', }}
         />
       </View>
@@ -31,6 +36,15 @@ export default function App() {
           accessibilityLabel="Learn more about this purple button"
         />
       </View>
+      </ImageBackground>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+image:{
+  flex: 1,
+  resizeMode: "cover",
+  justifyContent: "center"
+},
+});
