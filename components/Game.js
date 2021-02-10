@@ -22,7 +22,7 @@ class Game extends React.Component {
         return (
             <View style={styles.container}>
                 <Ennemy></Ennemy>
-                <ChangePostion></ChangePostion>
+                <ChangePostion style={styles.changePositionStyle}></ChangePostion>
                 <Button
                     onPress={() => this.start()}
                     title="start"
@@ -58,6 +58,10 @@ const styles = StyleSheet.create({
     ObjectPostion3: {
         position: 'absolute',
         left: 500,
+    },
+    changePositionStyle: {
+        // width: 70,
+        // marginTop: 70,
     },
 });
 

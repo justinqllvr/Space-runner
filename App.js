@@ -7,6 +7,6 @@ import Game from './components/Game';
 export default function App() {
 
   return (
-    <Game></Game>
+    <Game style={{flex: 1}}></Game>
   );
 }
