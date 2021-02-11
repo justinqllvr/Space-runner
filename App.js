@@ -55,7 +55,8 @@ export default class App extends React.Component {
 
     let random = Math.floor(Math.random() * 5);
 
-    let EnemyPosition = [random * windowWidth / 5];
+    const EnemyPosition = [random * windowWidth / 5, random * 2 * windowWidth / 5, random * 3 * windowWidth / 5, random * 4 * windowWidth / 5];
+    // const [tab, setTab] = useState([])
 
     let newly_added_EnemyPosition = { title: "new title", color: "green" };
     // une fois la mise à jour de l'état, la fonction de rendu sera appelée
@@ -76,7 +77,8 @@ export default class App extends React.Component {
         <EnemyAnimView>
               <Image
                 source={require('./assets/ennemi.gif')}
-                style={{ width: 100, height: 100, marginLeft: (Math.floor(Math.random() * 5) * windowWidth / 5), bottom: 0, overflow: 'visible', }}
+                // (Math.floor(Math.random() * 5) * windowWidth / 5)
+                style={{ width: 100, height: 100, marginLeft: this.state.EnemyPosition[0], bottom: 0, overflow: 'visible', }}
               />
         </EnemyAnimView>
       )
@@ -93,7 +95,7 @@ export default class App extends React.Component {
                 style={{ width: 100, height: 100, marginLeft: windowWidth / 5 - windowWidth / 5, bottom: 0, overflow: 'visible', }}
               />
             </EnemyAnimView> */}
-            {myNewEnemy}
+            {myNewEnemy}  
             {/* <EnemyAnimView>
               <Image
                 source={require('./assets/ennemi.gif')}
