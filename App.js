@@ -41,25 +41,6 @@ const EnemyAnimView = (props) => {
 
 export default class App extends React.Component {
 
-  constructor(props) {
-    super(props);
-    console.log("constructor");
-    // sauvegarde des variables d'état
-    this.state = { data: [], positionX: windowWidth / 5 };
-  }
-
-  createButton() {
-    let newly_added_data = { title: "new title", color: "green" };
-    // une fois la mise à jour de l'état, la fonction de rendu sera appelée
-    this.setState({ data: [...this.state.data, newly_added_data] });
-    console.log(newly_added_data)
-  }  
-
-  let myNewEnemy = this.state.data.map((data, index) => {
-    return (
-      <Button key={index} title={data.title} color={data.color} onPress={(e) => { this.createButton() }} />
-    )
-  });
  
 
 
@@ -70,39 +51,7 @@ render(){
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground source={Background} style={styles.image}>
-        <View style={{ flex: 1 }}>
-          <EnemyAnimView>
-            <Image
-              source={require('./assets/ennemi.gif')}
-              style={{ width: 100, height: 100, marginLeft: windowWidth / 5 - windowWidth / 5, bottom: 0, overflow: 'visible', }}
-            />
-          </EnemyAnimView>
-          <EnemyAnimView>
-            <Image
-              source={require('./assets/ennemi.gif')}
-              style={{ width: 100, height: 100, marginLeft: windowWidth / 5, bottom: 0, overflow: 'visible', }}
-            />
-          </EnemyAnimView>
-          <EnemyAnimView>
-            <Image
-              source={require('./assets/ennemi.gif')}
-              style={{ width: 100, height: 100, marginLeft: 2 * windowWidth / 5, bottom: 0, overflow: 'visible', }}
-            />
-          </EnemyAnimView>
-          <EnemyAnimView>
-            <Image
-              source={require('./assets/ennemi.gif')}
-              style={{ width: 100, height: 100, marginLeft: 3 * windowWidth / 5, bottom: 0, overflow: 'visible', }}
-            />
-          </EnemyAnimView>
-          <EnemyAnimView>
-            <Image
-              source={require('./assets/ennemi.gif')}
-              style={{ width: 100, height: 100, marginLeft: 4 * windowWidth / 5, bottom: 0, overflow: 'visible', }}
-            />
-          </EnemyAnimView>
 
-        </View>
         {/* Vaisseau */}
         <View style={{ flex: 2 }}>
           <Image
