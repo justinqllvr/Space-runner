@@ -9,6 +9,7 @@ import Background from './assets/bg.png';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
 // Animation des ennemies
 const EnemyAnimView = (props) => {
   const enemyAnim = useRef(new Animated.Value(-100)).current  // Initial value for deplacement: 0
