@@ -19,35 +19,6 @@ const windowHeight = Dimensions.get('window').height;
 let waveCounter = 0
 let moveCounter = 0
 
-
-// Animation des ennemies
-// const EnemyAnimView = (props) => {
-//   const enemyAnim = useRef(new Animated.Value(-100)).current  // Initial value for deplacement: 0
-
-//   useEffect(() => {
-//     Animated.timing(
-//       enemyAnim,
-//       {
-//         toValue: windowHeight,
-//         duration: 6000,
-//       }
-//     ).start();
-//   }, [enemyAnim])
-
-//   return (
-//     <Animated.View                 // Special animatable View
-//       style={{
-//         marginTop: enemyAnim,
-//         position: "absolute"       // Bind opacity to animated value
-//       }}
-//     >
-//       {props.children}
-//     </Animated.View>
-//   );
-// }
-
-
-
 export default class App extends React.Component {
   
 async componentDidMount(){
@@ -81,7 +52,7 @@ async componentDidMount(){
     // sauvegarde des variables d'état
     this.state = {
       EnemyPosition: [],
-      positionX: windowWidth / 5,
+      positionX: 2 * windowWidth / 5,
       random: windowWidth / 5,
       positionY: -100
     };
@@ -89,24 +60,21 @@ async componentDidMount(){
 
   //fonction qui fait bouger les ennemies 
   moveEnemy() {
-    
-    this.setState({ positionY: this.state.positionY + 1 })
+    this.setState({ positionY: this.state.positionY + 4 }) //déplace l'ennemie avec un pas de 4
     moveCounter++
-    console.log(this.state.positionY)
     setTimeout(() => {
-      if (moveCounter < 500 && this.state.positionY <= 370) {
-        this.moveEnemy()
-      } else if (waveCounter <= 5) {
-        this.setState({ random: ((Math.floor(Math.random() * 3) + 1) * windowWidth / 5) });
-        this.setState({ positionY: -100 })
-        // this.createEnemy()
+      if (moveCounter < 1000 && this.state.positionY <= windowHeight) {
+        this.moveEnemy() 
+      } else if (waveCounter <= 10) {
+        this.setState({ random: ((Math.floor(Math.random() * 3) + 1) * windowWidth / 5) }); //défini une place random
+        this.setState({ positionY: -100 }) //réinitialise la position de l'ennemi
         this.moveEnemy()
         moveCounter = 0
         waveCounter++
       } else {
-        waveCounter = 8
+        waveCounter = 15
       }
-    }, 10);
+    }, 7);
   }
 
   //fonction qui créé l'ennemie
@@ -125,19 +93,24 @@ async componentDidMount(){
 
   render() {
     //vérifie les collisions et laisse un message si le joueur à perdu
-    if (this.state.random == this.state.positionX && this.state.positionY == 320) {
-      moveCounter = 501
-      waveCounter = 8
+    if (this.state.random == this.state.positionX && this.state.positionY == (windowHeight - 280)) {
+      moveCounter = 1001 //fait arrêter les ennemis de bouger
+      waveCounter = 20
       return (
-        <View><Text>You have lost haha</Text></View>
+        <View>
+          <Text>You have lost haha</Text>
+        </View>
       )
     }
-    //pour placer le vaisseau à 3 positions différentes
+    //pour placer le vaisseau à 3 positions différentes et correction de trajectoire
     if (this.state.positionX < windowWidth / 5) {
       this.setState({ positionX: windowWidth / 5 })
-    } else if (this.state.positionX > 3 * windowWidth / 5) {
+    } else if (this.state.positionX > 3 * windowWidth / 5 - 0.2 && this.state.positionX != 3 * windowWidth / 5) {
       this.setState({ positionX: 3 * windowWidth / 5 })
+    } else if (this.state.positionX != 3 * windowWidth / 5 && this.state.positionX != 2 * windowWidth / 5 && this.state.positionX != windowWidth / 5) {
+      this.setState({ positionX: 2 * windowWidth / 5 })
     }
+
 
     //créer un nouvel ennemy à chaque fois que createEnemy est appelé
     let myNewEnemy = this.state.EnemyPosition.map((index) => {
@@ -195,7 +168,6 @@ async componentDidMount(){
               color="#841584"
               accessibilityLabel="Learn more about this purple button"
             />
-
           </View>
         </ImageBackground>
       </View>
