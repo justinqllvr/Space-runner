@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Image } from 'react-native-elements';
-import { StyleSheet, Text, Button, View, Dimensions, Animated } from 'react-native';
+import { StyleSheet, Text, Button, View, Dimensions, Animated, TouchableOpacity } from 'react-native';
 import Counter from "./counter";
 // import DirectionButton from './components/DirectionButton';
 
 // BACKGROUND
 import { ImageBackground } from 'react-native';
-import Background from './assets/bg.png';
+import Background from './assets/background.jpg';
 import { render } from 'react-dom';
 
 //MUSIC 
+import { WebView } from 'react-native-webview';
+import { Audio } from 'expo-av';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -47,6 +49,31 @@ let moveCounter = 0
 
 
 export default class App extends React.Component {
+  
+async componentDidMount(){
+  Audio.setAudioModeAsync({
+    allowsRecordingIOS: false,
+    interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+    playsInSilentModeIOS: true,
+    interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+    shouldDuckAndroid: true,
+    staysActiveInBackground: true,
+    playsThroughEarpieceAndroid: true
+  });
+
+  this.sound = new Audio.Sound();
+
+  const status = {
+    shouldPlay: false
+  };
+
+  this.sound.loadAsync(require('./assets/music.mp3'), status, false);
+
+  }
+
+  playSound(){
+    this.sound.playAsync;
+  }
 
   constructor(props) {
     super(props);
@@ -117,7 +144,7 @@ export default class App extends React.Component {
       return (
         <View key={index} style={{ marginLeft: this.state.random, top: this.state.positionY, overflow: 'visible', position: 'absolute' }}>
           <Image
-            source={require('./assets/ennemi.gif')}
+            source={require('./assets/ennemi.png')}
 
             // (Math.floor(Math.random() * 5) * windowWidth / 5)
             style={{ width: 100, height: 100, }}
@@ -127,10 +154,16 @@ export default class App extends React.Component {
       )
     });
 
+
     return (
       <View style={{ flex: 1 }}>
         <ImageBackground source={Background} style={styles.image}>
-          <Counter></Counter>
+          <Button 
+            title="play sound"
+            color="#3CDBBB1"
+            onPress={this.playSound.bind(this)} />
+        <Counter style={{ color: "#3CDBBB1" }}></Counter>
+        
           <View style={{ flex: 1 }}>
             {myNewEnemy}
           </View>
@@ -138,7 +171,7 @@ export default class App extends React.Component {
           {/* Vaisseau */}
           <View style={{ position: 'absolute', bottom: 100, }}>
             <Image
-              source={require('./assets/joueur.gif')}
+              source={require('./assets/joueur.png')}
               style={{ width: 100, height: 100, marginLeft: this.state.positionX, bottom: 0, overflow: 'visible', }}
             />
           </View>
@@ -173,6 +206,7 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  
   image: {
     flex: 1,
     resizeMode: "cover",
