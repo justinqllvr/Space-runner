@@ -20,6 +20,7 @@ let waveCounter = 0
 let moveCounter = 0
 
 export default class App extends React.Component {
+<<<<<<< HEAD
   
 async componentDidMount(){
   Audio.setAudioModeAsync({
@@ -45,6 +46,8 @@ async componentDidMount(){
   playSound(){
     this.sound.playAsync;
   }
+=======
+>>>>>>> 69b3559555353a13acd0ace68b6baabd8823c4eb
 
   constructor(props) {
     super(props);
