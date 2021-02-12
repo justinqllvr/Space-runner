@@ -9,6 +9,9 @@ import { ImageBackground } from 'react-native';
 import Background from './assets/bg.png';
 import { render } from 'react-dom';
 
+//MUSIC 
+
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 let waveCounter = 0
