@@ -49,56 +49,52 @@ export default class App extends React.Component {
     super(props);
     console.log("constructor");
     // sauvegarde des variables d'état
-    this.state = { EnemyPosition: [], positionX: windowWidth / 5, random: windowWidth / 5, positionY: -100 };
+    this.state = {
+      EnemyPosition: [],
+      positionX: windowWidth / 5,
+      random: windowWidth / 5,
+      positionY: -100
+    };
   }
 
-  //fonction qui fait bouger les ennemies
+  //fonction qui fait bouger les ennemies 
   moveEnemy() {
+    
     this.setState({ positionY: this.state.positionY + 1 })
     moveCounter++
     console.log(this.state.positionY)
     setTimeout(() => {
       if (moveCounter < 500 && this.state.positionY <= 370) {
         this.moveEnemy()
-      } else if (waveCounter <= 5){
+      } else if (waveCounter <= 5) {
+        this.setState({ random: ((Math.floor(Math.random() * 3) + 1) * windowWidth / 5) });
         this.setState({ positionY: -100 })
-        this.createEnemy()
-        moveCounter = 0
+        // this.createEnemy()
         this.moveEnemy()
+        moveCounter = 0
+        waveCounter++
       } else {
         waveCounter = 8
       }
     }, 10);
   }
 
-
+  //fonction qui créé l'ennemie
   createEnemy() {
     this.setState({ random: ((Math.floor(Math.random() * 3) + 1) * windowWidth / 5) }); //créé la position random de l'ennemie
-    // this.setState({ EnemyPosition: [windowWidth / 5] })
-    // const EnemyPosition = [];
-    // console.log(this.state.EnemyPosition)
-
-    let newly_added_EnemyPosition = { };
+    let newly_added_EnemyPosition = {};
     // une fois la mise à jour de l'état, la fonction de rendu sera appelée
     this.setState({ EnemyPosition: [...this.state.EnemyPosition, newly_added_EnemyPosition] });
-    console.log(newly_added_EnemyPosition)
-
+    //lance la fonction pour faire bouger l'ennemi
     this.moveEnemy()
-    //fonction qui créé les vagues d'ennemis
-    waveCounter++
+    waveCounter++ //pour contrôler les vagues d'ennemis
   }
 
-  
+
 
 
   render() {
-    // if(this.state.positionY >= 370 && waveCounter <= 5 && this.state.positionY <= 380) {
-        
-    // } else {
-    //     waveCounter = 7
-    //   }
-    // let [positionX, setPositionX] = useState(windowWidth / 5);
-    //vérifie les collisions et laisse un message de perdu
+    //vérifie les collisions et laisse un message si le joueur à perdu
     if (this.state.random == this.state.positionX && this.state.positionY == 320) {
       moveCounter = 501
       waveCounter = 8
@@ -113,13 +109,13 @@ export default class App extends React.Component {
       this.setState({ positionX: 3 * windowWidth / 5 })
     }
 
-    //créer un nouvel ennemy à chaque fois que create enemy est appelé
+    //créer un nouvel ennemy à chaque fois que createEnemy est appelé
     let myNewEnemy = this.state.EnemyPosition.map((index) => {
       return (
-        <View style={{marginLeft: this.state.random, top: this.state.positionY, overflow: 'visible', position: 'absolute'}}>
+        <View key={index} style={{ marginLeft: this.state.random, top: this.state.positionY, overflow: 'visible', position: 'absolute' }}>
           <Image
             source={require('./assets/ennemi.gif')}
-            key={index}
+
             // (Math.floor(Math.random() * 5) * windowWidth / 5)
             style={{ width: 100, height: 100, }}
           />
